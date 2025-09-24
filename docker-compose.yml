@@ -1,0 +1,85 @@
+version: '3'
+services:
+  allure:
+    image: "frankescobar/allure-docker-service"
+    environment:
+      CHECK_RESULTS_EVERY_SECONDS: 1
+      KEEP_HISTORY: 1
+    ports:
+      - "5050:5050"
+    volumes:
+      - shared_data:/app/allure-results
+      - shared_report:/app/default-reports
+
+  allure-ui:
+    image: "frankescobar/allure-docker-service-ui"
+    environment:
+      ALLURE_DOCKER_PUBLIC_API_URL: "http://localhost:5050"
+      ALLURE_DOCKER_PUBLIC_API_URL_PREFIX: ""
+    ports:
+      - "5252:5252"
+
+  greenmail:
+    image: greenmail/standalone:2.1.5
+    tty: true
+    stdin_open: true
+    environment:
+      JAVA_OPTS: '-Dgreenmail.verbose'
+    ports:
+      - "3025:3025"
+      - "3110:3110"
+      - "3143:3143"
+      - "3465:3465"
+      - "3993:3993"
+      - "3995:3995"
+      - "8080:8080"
+    networks:
+      - greenmail-network
+
+  roundcube:
+    image: roundcube/roundcubemail:nightly
+    tty: true
+    stdin_open: true
+    environment:
+      ROUNDCUBEMAIL_DEFAULT_HOST: greenmail
+      ROUNDCUBEMAIL_DEFAULT_PORT: 3143
+      ROUNDCUBEMAIL_SMTP_SERVER: greenmail
+      ROUNDCUBEMAIL_SMTP_PORT: 3025
+    ports:
+      - "80:80"
+    depends_on:
+      - greenmail
+    networks:
+      - greenmail-network
+
+  chrome:
+    image: selenium/standalone-chrome:136.0-20250828
+    restart: always
+    shm_size: 2gb
+    ports:
+      - "4444:4444"
+      - "7900:7900"
+    networks:
+      - greenmail-network
+
+  mail:
+    image: mail:latest
+    init: true
+    ports:
+      - "5555:5555"
+    volumes:
+      - shared_data:/app/target/allure-results
+    depends_on:
+      - greenmail
+      - roundcube
+      - chrome
+    networks:
+      - greenmail-network
+
+networks:
+  greenmail-network:
+    driver: bridge
+
+volumes:
+  shared_data:
+  shared_report:
