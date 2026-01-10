@@ -3,12 +3,14 @@ package infrastructure.extension;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.WebDriverRunner;
 import com.codeborne.selenide.logevents.SelenideLogger;
+import infrastructure.config.ServiceConfig;
 import infrastructure.drivers.CustomDriver;
 
 import infrastructure.helpers.TestConfig;
 
 import infrastructure.utils.Constants;
 import io.qameta.allure.selenide.AllureSelenide;
+import org.aeonbits.owner.ConfigFactory;
 import org.junit.jupiter.api.extension.AfterEachCallback;
 import org.junit.jupiter.api.extension.BeforeAllCallback;
 import org.junit.jupiter.api.extension.BeforeEachCallback;
@@ -25,9 +27,10 @@ public class AroundHooks implements BeforeAllCallback, BeforeEachCallback, After
 
     @Override
     public void beforeAll(ExtensionContext extensionContext) {
-        //Установили пользователям временную зону текущей машины
-//        BackendUser.setTimeZoneLocalMachine(Backend.getAuthTokenAdmin(), config.adminLogin);
-//        BackendUser.setTimeZoneLocalMachine(Backend.getAuthTokenUser(), config.userLogin);
+        ServiceConfig config1 = ConfigFactory.create(ServiceConfig.class);
+
+
+
         try {
             Files.createDirectories(Paths.get(Constants.PATH_TO_REPORT));
         } catch (IOException e) {
