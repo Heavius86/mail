@@ -46,28 +46,6 @@ public class CustomDriver {
         return WebDriverRunner.hasWebDriverStarted();
     }
 
-    /**
-     * Останавливает поток выполнения на указанное время
-     *
-     * @param mills миллисекунды
-     */
-    public static void waitMills(long mills) {
-        Selenide.sleep(mills);
-    }
-
-
-    /**
-     * Закрыть alert JS "Подтвердить"
-     * Немного костыльный метод, вызывается каждый раз после открытия страницы
-     * Так же делает задержку после открытия в 1000мс
-     */
-    public static void alertAccept() {
-        try {
-            Selenide.switchTo().alert(Duration.ofMillis(1000)).accept();
-            Loggers.CONSOLE.warn("Close JS alert Accept");
-        } catch (TimeoutException | AlertNotFoundError ignored) {
-        }
-    }
 
     public static void closeDriver(){
         WebDriverRunner.closeWebDriver();

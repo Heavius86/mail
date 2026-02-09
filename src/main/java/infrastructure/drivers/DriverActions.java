@@ -28,8 +28,23 @@ public class DriverActions {
      * Проверяем что нет никаких JS алертов и ждем когда перестанут грузится спиннеры
      */
     public static void checkAlert() {
-        CustomDriver.alertAccept();
+        try {
+            Selenide.switchTo().alert(Duration.ofMillis(1000)).accept();
+            Loggers.CONSOLE.warn("Close JS alert Accept");
+        } catch (TimeoutException | AlertNotFoundError ignored) {
+            System.out.println("Ошибка при работе с алертом");
+        }
     }
+
+    /**
+     * Останавливает поток выполнения на указанное время
+     *
+     * @param mills миллисекунды
+     */
+    public static void waitMills(long mills) {
+        Selenide.sleep(mills);
+    }
+
 
     public static void refresh() {
         Selenide.refresh();
