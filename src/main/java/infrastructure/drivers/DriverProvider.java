@@ -29,7 +29,7 @@ public class DriverProvider implements WebDriverProvider {
         options.addArguments("--disable-dev-shm-usage");
         // options.addArguments("--headless");
         HashMap<String, Object> chromePrefs = new HashMap<>();
-        chromePrefs.put("download.default_directory", Constants.PATH_TO_DEFAULT_DIR);
+        chromePrefs.put("download.default_directory", conf.user_dir());
         options.setExperimentalOption("prefs", chromePrefs);
         options.setAcceptInsecureCerts(true);
         LoggingPreferences logPref = new LoggingPreferences();
