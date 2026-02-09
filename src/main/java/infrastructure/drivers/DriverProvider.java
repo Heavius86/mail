@@ -1,26 +1,23 @@
 package infrastructure.drivers;
 
 import com.codeborne.selenide.WebDriverProvider;
+import infrastructure.config.Configs;
+import infrastructure.config.ChromeConfig;
 import infrastructure.utils.Constants;
-import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.logging.LogType;
 import org.openqa.selenium.logging.LoggingPreferences;
-import org.openqa.selenium.remote.LocalFileDetector;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
 
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
-import java.util.Objects;
 import java.util.logging.Level;
 
 public class DriverProvider implements WebDriverProvider {
-
+    static ChromeConfig conf = Configs.getInstance();
     @Override
     public WebDriver createDriver(Capabilities capabilities) {
         ChromeOptions options = new ChromeOptions();
@@ -41,19 +38,8 @@ public class DriverProvider implements WebDriverProvider {
 
 
         RemoteWebDriver driver;
-        URL url;
+        URL url = conf.UrlChrome();
 
-        try {
-            String value = System.getProperty("is_docker");
-            if (Objects.nonNull(value) && value.equals("true"))
-                url = new URL("http://chrome:4444/wd/hub");
-            else
-                url = new URL("http://localhost:4444/wd/hub");
-        } catch (MalformedURLException e) {
-            throw new RuntimeException(e);
-        }
-
-        // WebDriverManager.chromedriver().driverRepositoryUrl(url).setup();
         driver = new RemoteWebDriver(url, options);
         return driver;
     }

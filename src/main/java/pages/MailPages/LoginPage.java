@@ -6,19 +6,23 @@ import static com.codeborne.selenide.Condition.exist;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
+import static infrastructure.drivers.DriverActions.*;
 
 public class LoginPage {
 
     public void fillLoginAndPass(String login, String pass) {
-        $(By.xpath("//input[@id='rcmloginuser']")).shouldBe(visible).sendKeys(login);
-        $(By.xpath("//input[@id='rcmloginpwd']")).shouldBe(visible).sendKeys(login);
+        sendKeys_XPath("//input[@id='rcmloginuser']", login);
+        sendKeys_XPath("//input[@id='rcmloginpwd']", pass);
+
     }
 
     public void clickEnter() {
-        $(By.xpath("//button[@id='rcmloginsubmit']")).shouldBe(visible).click();
+
+        click_XPath("//button[@id='rcmloginsubmit']");
     }
 
     public void checkOpenMailDeck(String pass) {
-        $(By.xpath("//span[@class='header-title username' and text() = 'user@mail.com']")).shouldBe(exist);
+
+        checkShouldBeExist_XPath("//span[@class='header-title username' and text() = 'user@mail.com']");
     }
 }
