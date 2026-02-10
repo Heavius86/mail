@@ -5,8 +5,11 @@ import org.aeonbits.owner.Config;
 import org.aeonbits.owner.Config.LoadPolicy;
 import org.aeonbits.owner.Config.LoadType;
 import org.aeonbits.owner.Config.Sources;
+import org.aeonbits.owner.Converter;
 
+import java.lang.reflect.Method;
 import java.net.URL;
+import java.nio.file.Paths;
 
 @LoadPolicy(LoadType.MERGE)
 @Sources({
@@ -65,8 +68,10 @@ public interface ChromeConfig extends Config {
     String user_dir();
 
     @Key("user.dir")
-    @ConverterClass(TextCheckConverter.class)
+    @ConverterClass(PathToReportConverter.class)
     String path_to_report();
 
-
+    @Key("user.dir")
+    @ConverterClass(PathDownloadsFoldertConverter.class)
+    String pathDownloadsFolder();
 }

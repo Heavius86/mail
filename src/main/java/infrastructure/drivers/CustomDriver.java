@@ -18,8 +18,8 @@ public class CustomDriver {
     public static void initDriver() {
         Configuration.savePageSource = conf.savePageSource();
         Configuration.screenshots = conf.screenshots();
-        Configuration.reportsFolder = Paths.get(conf.user_dir(), "target", "tests_report").toString();
-        Configuration.downloadsFolder = Paths.get(conf.user_dir(), "target", "build").toString();
+        Configuration.reportsFolder = conf.path_to_report();
+        Configuration.downloadsFolder = conf.pathDownloadsFolder();
         Configuration.timeout = conf.timeout();
         Configuration.browserSize = conf.browserSize();
         Configuration.pageLoadStrategy = conf.pageLoadStrategy();
@@ -44,7 +44,7 @@ public class CustomDriver {
     }
 
 
-    public static void closeDriver() {
+    public static void closeWebDriverRunner() {
         WebDriverRunner.closeWebDriver();
     }
 }

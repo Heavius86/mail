@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
+import static infrastructure.drivers.CustomDriver.closeWebDriverRunner;
 import static infrastructure.drivers.DriverActions.addWebDriverListener;
 import static infrastructure.drivers.DriverActions.closeWebDriver;
 
@@ -41,7 +42,7 @@ public class AroundHooks implements BeforeAllCallback, BeforeEachCallback, After
 
     @Override
     public void afterEach(ExtensionContext extensionContext) {
-        WebDriverRunner.closeWebDriver();
+        closeWebDriverRunner();
         closeWebDriver();
     }
 }
