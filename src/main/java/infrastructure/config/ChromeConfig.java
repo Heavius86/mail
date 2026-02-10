@@ -2,7 +2,9 @@ package infrastructure.config;
 
 import com.codeborne.selenide.TextCheck;
 import org.aeonbits.owner.Config;
-import org.aeonbits.owner.Config.*;
+import org.aeonbits.owner.Config.LoadPolicy;
+import org.aeonbits.owner.Config.LoadType;
+import org.aeonbits.owner.Config.Sources;
 
 import java.net.URL;
 
@@ -30,18 +32,25 @@ public interface ChromeConfig extends Config {
 
     @Key("downloadsFolder")
     String downloadsFolder();
+
     @Key("reportsFolder")
     String reportsFolder();
+
     @Key("timeout")
     Integer timeout();
+
     @Key("browserSize")
     String browserSize();
+
     @Key("pageLoadStrategy")
     String pageLoadStrategy();
+
     @Key("pageLoadTimeout")
     Integer pageLoadTimeout();
+
     @Key("reopenBrowserOnFail")
     Boolean reopenBrowserOnFail();
+
     @Key("webdriverLogsEnabled")
     Boolean webdriverLogsEnabled();
 
@@ -54,10 +63,10 @@ public interface ChromeConfig extends Config {
 
     @Key("user.dir")
     String user_dir();
-//
-//    reportsFolder
-//
-//            downloadsFolder
+
+    @Key("user.dir")
+    @ConverterClass(TextCheckConverter.class)
+    String path_to_report();
+
 
 }
-

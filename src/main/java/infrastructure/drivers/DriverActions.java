@@ -1,10 +1,10 @@
 package infrastructure.drivers;
 
-import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Selenide;
-import com.codeborne.selenide.WebElementCondition;
 import com.codeborne.selenide.ex.AlertNotFoundError;
+import com.codeborne.selenide.logevents.SelenideLogger;
 import infrastructure.utils.Loggers;
+import io.qameta.allure.selenide.AllureSelenide;
 import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;
 
@@ -64,5 +64,17 @@ public class DriverActions {
 
     public static void checkShouldBeExist_XPath(String path) {
         $(By.xpath("//span[@class='header-title username' and text() = 'user@mail.com']")).shouldBe(exist);
+    }
+
+    public static void closeWebDriver() {
+        Selenide.closeWebDriver();
+    }
+
+    public static void addWebDriverListener() {
+        if (!SelenideLogger.hasListener("AllureSelenide")) {
+            SelenideLogger.addListener("AllureSelenide", new AllureSelenide()
+                    .savePageSource(false)
+                    .screenshots(true));
+        }
     }
 }

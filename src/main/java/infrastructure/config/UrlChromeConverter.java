@@ -2,7 +2,6 @@ package infrastructure.config;
 
 import org.aeonbits.owner.Converter;
 
-import javax.swing.*;
 import java.lang.reflect.Method;
 import java.net.MalformedURLException;
 import java.net.URL;

@@ -98,8 +98,8 @@ public class HttpClient {
         return this;
     }
 
-    private boolean checkCode(int code){
-        if(code >= 200 && code < 300){
+    private boolean checkCode(int code) {
+        if (code >= 200 && code < 300) {
             return true;
         }
         return false;
@@ -111,7 +111,7 @@ public class HttpClient {
             propertiesMap.forEach((key, value) -> httpGet.addHeader(key, value));
             CloseableHttpResponse response = httpclient.execute(httpGet);
             Loggers.FILE_LOGGER.info(httpGet.getMethod() + " " + url + " " + response.getStatusLine().toString());
-           return checkCode(response.getStatusLine().getStatusCode());
+            return checkCode(response.getStatusLine().getStatusCode());
         }
     }
 

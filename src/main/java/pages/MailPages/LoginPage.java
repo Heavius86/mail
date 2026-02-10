@@ -1,11 +1,5 @@
 package pages.MailPages;
 
-import org.openqa.selenium.By;
-
-import static com.codeborne.selenide.Condition.exist;
-import static com.codeborne.selenide.Condition.visible;
-import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.$$;
 import static infrastructure.drivers.DriverActions.*;
 
 public class LoginPage {

@@ -3,11 +3,8 @@ package infrastructure.drivers;
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.WebDriverRunner;
-import com.codeborne.selenide.ex.AlertNotFoundError;
-import infrastructure.config.Configs;
 import infrastructure.config.ChromeConfig;
-import infrastructure.utils.Loggers;
-import org.openqa.selenium.TimeoutException;
+import infrastructure.config.Configs;
 
 import java.nio.file.Paths;
 import java.time.Duration;
@@ -47,7 +44,7 @@ public class CustomDriver {
     }
 
 
-    public static void closeDriver(){
+    public static void closeDriver() {
         WebDriverRunner.closeWebDriver();
     }
 }

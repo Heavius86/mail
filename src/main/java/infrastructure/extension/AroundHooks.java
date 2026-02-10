@@ -1,13 +1,9 @@
 package infrastructure.extension;
 
-import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.WebDriverRunner;
-import com.codeborne.selenide.logevents.SelenideLogger;
+import infrastructure.config.ChromeConfig;
+import infrastructure.config.Configs;
 import infrastructure.drivers.CustomDriver;
-
-
-import infrastructure.utils.Constants;
-import io.qameta.allure.selenide.AllureSelenide;
 import org.junit.jupiter.api.extension.AfterEachCallback;
 import org.junit.jupiter.api.extension.BeforeAllCallback;
 import org.junit.jupiter.api.extension.BeforeEachCallback;
@@ -17,15 +13,18 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
+import static infrastructure.drivers.DriverActions.addWebDriverListener;
+import static infrastructure.drivers.DriverActions.closeWebDriver;
 
 
 public class AroundHooks implements BeforeAllCallback, BeforeEachCallback, AfterEachCallback {
+    static ChromeConfig conf = Configs.getInstance();
 
     @Override
     public void beforeAll(ExtensionContext extensionContext) {
 
         try {
-            Files.createDirectories(Paths.get(Constants.PATH_TO_REPORT));
+            Files.createDirectories(Paths.get(conf.path_to_report()));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -36,16 +35,13 @@ public class AroundHooks implements BeforeAllCallback, BeforeEachCallback, After
         if (!CustomDriver.isDriverRun()) {
             CustomDriver.initDriver();
         }
-        if (!SelenideLogger.hasListener("AllureSelenide")) {
-            SelenideLogger.addListener("AllureSelenide", new AllureSelenide()
-                    .savePageSource(false)
-                    .screenshots(true));
-        }
+
+        addWebDriverListener();
     }
 
     @Override
-    public void afterEach(ExtensionContext extensionContext)  {
+    public void afterEach(ExtensionContext extensionContext) {
         WebDriverRunner.closeWebDriver();
-        Selenide.closeWebDriver();
+        closeWebDriver();
     }
 }
