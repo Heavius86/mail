@@ -1,4 +1,3 @@
-import com.codeborne.selenide.Selenide;
 import infrastructure.extension.AroundHooks;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -18,10 +17,12 @@ public class FirstTests {
         MailPage mailPage = new MailPage();
         LoginPage loginPage = new LoginPage();
 
-        mailPage.open("http:/roundcube/");
-        loginPage.fillLoginAndPass("user@mail.com", "user@mail.com");
+        mailPage.open("http://roundcube/");
 
-        loginPage.clickEnter();
+        loginPage.getInput_Login().sendKeys("user@mail.com");
+        loginPage.getInput_Password().sendKeys("user@mail.com");
+        loginPage.getBottom_LoginSubmit().clickBottom();
+
         loginPage.checkOpenMailDeck("user@mail.com");
 
         mailPage.clickBack();
@@ -29,9 +30,9 @@ public class FirstTests {
 
     @Test
     @DisplayName("Почта")
-    public void mailTest()  {
+    public void mailTest() {
         MailPage mailPage = new MailPage();
-        mailPage.open("http:/google.com/");
+        mailPage.open("http://google.com/");
         assertEquals("ddd22", "ddd" + "22", "error");
     }
 }

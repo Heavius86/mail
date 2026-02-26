@@ -63,7 +63,7 @@ public class DriverActions {
     }
 
     public static void checkShouldBeExist_XPath(String path) {
-        $(By.xpath("//span[@class='header-title username' and text() = 'user@mail.com']")).shouldBe(exist);
+        $(By.xpath(path)).shouldBe(exist);
     }
 
     public static void closeWebDriver() {
